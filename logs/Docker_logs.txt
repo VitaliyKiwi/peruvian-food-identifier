@@ -1,0 +1,191 @@
+Starting "default"...
+(default) Check network to re-create if needed...
+(default) Windows might ask for the permission to configure a dhcp server. Sometimes, such confirmation window is minimized in the taskbar.
+(default) Waiting for an IP...
+Machine "default" was started.
+Waiting for SSH to be available...
+Detecting the provisioner...
+Started machines may have new IP addresses. You may need to re-run the `docker-machine env` command.
+Regenerate TLS machine certs?  Warning: this is irreversible. (y/n): Regenerating TLS certificates
+Waiting for SSH to be available...
+Detecting the provisioner...
+Copying certs to the local machine directory...
+Copying certs to the remote machine...
+Setting Docker configuration on the remote daemon...
+
+This machine has been allocated an IP address, but Docker Machine could not
+reach it successfully.
+
+SSH for the machine should still work, but connecting to exposed ports, such as
+the Docker daemon port (usually <ip>:2376), may not work properly.
+
+You may need to add the route manually, or use another related workaround.
+
+This could be due to a VPN, proxy, or host file configuration issue.
+
+You also might want to clear any VirtualBox host only interfaces you are not using.
+Error checking TLS connection: Error checking and/or regenerating the certs: There was an error validating certificates for host "192.168.99.100:2376": dial tcp 192.168.99.100:2376: i/o timeout
+You can attempt to regenerate them using 'docker-machine regenerate-certs [name]'.
+Be advised that this will trigger a Docker daemon restart which might stop running containers.
+
+Error checking TLS connection: Error checking and/or regenerating the certs: There was an error validating certificates for host "192.168.99.100:2376": dial tcp 192.168.99.100:2376: i/o timeout
+You can attempt to regenerate them using 'docker-machine regenerate-certs [name]'.
+Be advised that this will trigger a Docker daemon restart which might stop running containers.
+
+
+
+
+                        ##         .
+                  ## ## ##        ==
+               ## ## ## ## ##    ===
+           /"""""""""""""""""\___/ ===
+      ~~~ {~~ ~~~~ ~~~ ~~~~ ~~~ ~ /  ===- ~~~
+           \______ o           __/
+             \    \         __/
+              \____\_______/
+
+docker is configured to use the default machine with IP 192.168.99.100
+For help getting started, check out the docs at https://docs.docker.com
+
+
+Start interactive shell
+jm_07 Docker Toolbox $ cd c:
+jm_07 c $ cd Users/jm_07/git-
+git-completion.bash  git-prompt.sh
+jm_07 c $ cd Users/jm_07/
+Display all 71 possibilities? (y or n)
+jm_07 c $ cd Users/jm_07/
+jm_07 ~ $ cd proyectosGit/peruvian-food-identifier/
+jm_07 (master) peruvian-food-identifier $ docker image build -t peruvian-food-detector .
+Sending build context to Docker daemon  410.7MB
+Step 1/11 : FROM python:3.6-slim-stretch
+ ---> ffafb5882b66
+Step 2/11 : RUN apt update
+ ---> Using cache
+ ---> d218321bff13
+Step 3/11 : RUN apt install -y python3-dev gcc
+ ---> Using cache
+ ---> 5eb6b0490f14
+Step 4/11 : RUN pip install torch_nightly -f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html
+ ---> Using cache
+ ---> ae13f5ef47f3
+Step 5/11 : RUN pip install fastai
+ ---> Using cache
+ ---> 2b9dc5b8d63f
+Step 6/11 : RUN pip install starlette uvicorn python-multipart aiohttp
+ ---> Using cache
+ ---> 6a6a534fcf42
+Step 7/11 : ADD tmp/models/model-weights.pth tmp/models/model-weights.pth
+ ---> 2fabc4e9ce53
+Step 8/11 : ADD peruvian-food-detector.py peruvian-food-detector.py
+ ---> 4652ec08b491
+Step 9/11 : RUN python peruvian-food-detector.py
+ ---> Running in f3c4628e4a5f
+Removing intermediate container f3c4628e4a5f
+ ---> 3a84c7fc29e5
+Step 10/11 : EXPOSE 8008
+ ---> Running in ca57eb327698
+Removing intermediate container ca57eb327698
+ ---> 66130dcdf593
+Step 11/11 : CMD ["python", "peruvian-food-detector.py", "serve"]
+ ---> Running in f4118a0677a4
+Removing intermediate container f4118a0677a4
+ ---> 52c003cefc9f
+Successfully built 52c003cefc9f
+Successfully tagged peruvian-food-detector:latest
+SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
+jm_07 (master) peruvian-food-identifier $ docker run -d --name peruvian-food-detector --publish 80:8008 peruvian-food-detector:latest
+adb88b9dd856751945059e9e455cde5fefc70411b5af677b74be62ec8b30c703
+jm_07 (master) peruvian-food-identifier $ docker ps
+CONTAINER ID        IMAGE                           COMMAND                  CREATED             STATUS              PORTS                  NAMES
+adb88b9dd856        peruvian-food-detector:latest   "python peruvian-foo…"   2 minutes ago       Up 2 minutes        0.0.0.0:80->8008/tcp   peruvian-food-detector
+jm_07 (master) peruvian-food-identifier $ docker container stop peruvian-food-detector
+peruvian-food-detector
+jm_07 (master) peruvian-food-identifier $ docker container rm peruvian-food-detector
+peruvian-food-detector
+jm_07 (master) peruvian-food-identifier $ docker image build -t peruvian-food-detector .
+Sending build context to Docker daemon  410.7MB
+Step 1/11 : FROM python:3.6-slim-stretch
+ ---> ffafb5882b66
+Step 2/11 : RUN apt update
+ ---> Using cache
+ ---> d218321bff13
+Step 3/11 : RUN apt install -y python3-dev gcc
+ ---> Using cache
+ ---> 5eb6b0490f14
+Step 4/11 : RUN pip install torch_nightly -f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html
+ ---> Using cache
+ ---> ae13f5ef47f3
+Step 5/11 : RUN pip install fastai
+ ---> Using cache
+ ---> 2b9dc5b8d63f
+Step 6/11 : RUN pip install starlette uvicorn python-multipart aiohttp
+ ---> Using cache
+ ---> 6a6a534fcf42
+Step 7/11 : ADD tmp/models/model-weights.pth tmp/models/model-weights.pth
+ ---> Using cache
+ ---> 2fabc4e9ce53
+Step 8/11 : ADD peruvian-food-detector.py peruvian-food-detector.py
+ ---> 0855fd9f624e
+Step 9/11 : RUN python peruvian-food-detector.py
+ ---> Running in c0003f18a75e
+Removing intermediate container c0003f18a75e
+ ---> f5fe79769f99
+Step 10/11 : EXPOSE 8008
+ ---> Running in 6186a79f714a
+Removing intermediate container 6186a79f714a
+ ---> fab946428526
+Step 11/11 : CMD ["python", "peruvian-food-detector.py", "serve"]
+ ---> Running in c60bd89a1ae1
+Removing intermediate container c60bd89a1ae1
+ ---> 578e81171988
+Successfully built 578e81171988
+Successfully tagged peruvian-food-detector:latest
+SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
+jm_07 (master) peruvian-food-identifier $ docker run -d --name peruvian-food-detector --publish 80:8008 peruvian-food-detector:latest
+9023f836a9bb004345305108f07574fa80fc1c9b0d74b9393a3c3e0d69f993ea
+jm_07 (master) peruvian-food-identifier $ docker container stop peruvian-food-detector
+peruvian-food-detector
+jm_07 (master) peruvian-food-identifier $ docker container rm peruvian-food-detector
+peruvian-food-detector
+jm_07 (master) peruvian-food-identifier $ docker image build -t peruvian-food-detector .
+Sending build context to Docker daemon  513.4MB
+Step 1/11 : FROM python:3.6-slim-stretch
+ ---> ffafb5882b66
+Step 2/11 : RUN apt update
+ ---> Using cache
+ ---> d218321bff13
+Step 3/11 : RUN apt install -y python3-dev gcc
+ ---> Using cache
+ ---> 5eb6b0490f14
+Step 4/11 : RUN pip install torch_nightly -f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html
+ ---> Using cache
+ ---> ae13f5ef47f3
+Step 5/11 : RUN pip install fastai
+ ---> Using cache
+ ---> 2b9dc5b8d63f
+Step 6/11 : RUN pip install starlette uvicorn python-multipart aiohttp
+ ---> Using cache
+ ---> 6a6a534fcf42
+Step 7/11 : ADD model-weights.pth model-weights.pth
+ ---> 79b15d8747f0
+Step 8/11 : ADD peruvian-food-detector.py peruvian-food-detector.py
+ ---> 30c5ed932064
+Step 9/11 : RUN python peruvian-food-detector.py
+ ---> Running in 103abbe95da2
+Removing intermediate container 103abbe95da2
+ ---> d7e8003770b1
+Step 10/11 : EXPOSE 8008
+ ---> Running in b19aa3416425
+Removing intermediate container b19aa3416425
+ ---> 41743a0a2a1a
+Step 11/11 : CMD ["python", "peruvian-food-detector.py", "serve"]
+ ---> Running in b9fb27280916
+Removing intermediate container b9fb27280916
+ ---> e8abdf40de31
+Successfully built e8abdf40de31
+Successfully tagged peruvian-food-detector:latest
+SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
+jm_07 (master) peruvian-food-identifier $ docker run -d --name peruvian-food-detector --publish 80:8008 peruvian-food-detector:latest
+608f796e4fac9d58cb4418096efc71c6c55511ba7a346b30c94d6b27d5b2673b
+jm_07 (master) peruvian-food-identifier $

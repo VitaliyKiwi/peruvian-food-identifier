@@ -1,0 +1,122 @@
+C:\WINDOWS\system32>heroku
+CLI to interact with Heroku
+
+VERSION
+  heroku/7.18.4 win32-x64 node-v11.0.0
+
+USAGE
+  $ heroku [COMMAND]
+
+COMMANDS
+  access          manage user access to apps
+  addons          tools and services for developing, extending, and operating your app
+  apps            manage apps on Heroku
+  auth            check 2fa status
+  authorizations  OAuth authorizations
+  autocomplete    display autocomplete installation instructions
+  buildpacks      scripts used to compile apps
+  certs           a topic for the ssl plugin
+  ci              run an application test suite on Heroku
+  clients         OAuth clients on the platform
+  config          environment variables of apps
+  container       Use containers to build and deploy Heroku apps
+  domains         custom domains for apps
+  drains          forward logs to syslog or HTTPS
+  features        add/remove app features
+  git             manage local git repository for app
+  help            display help for heroku
+  keys            add/remove account ssh keys
+  labs            add/remove experimental features
+  local           run heroku app locally
+  logs            display recent log output
+  maintenance     enable/disable access to app
+  members         manage organization members
+  notifications   display notifications
+  orgs            manage organizations
+  pg              manage postgresql databases
+  pipelines       groups of apps that share the same codebase
+  plugins         list installed plugins
+  ps              Client tools for Heroku Exec
+  psql            open a psql shell to the database
+  redis           manage heroku redis instances
+  regions         list available regions for deployment
+  releases        display the releases for an app
+  reviewapps      disposable apps built on GitHub pull requests
+  run             run a one-off process inside a Heroku dyno
+  sessions        OAuth sessions
+  spaces          manage heroku private spaces
+  status          status of the Heroku platform
+  teams           manage teams
+  update          update the Heroku CLI
+  webhooks        setup HTTP notifications of app activity
+
+
+C:\WINDOWS\system32>heroku container:login
+Login Succeeded
+
+C:\WINDOWS\system32>heroku create peruvian-food-detector
+Creating ⬢ peruvian-food-detector... done
+https://peruvian-food-detector.herokuapp.com/ | https://git.heroku.com/peruvian-food-detector.git
+
+C:\WINDOWS\system32>cd C:\Users\jm_07\proyectosGit\peruvian-food-identifier
+
+C:\Users\jm_07\proyectosGit\peruvian-food-identifier>heroku container:push web -a peruvian-food-detector
+=== Building web (C:\Users\jm_07\proyectosGit\peruvian-food-identifier\Dockerfile)
+Sending build context to Docker daemon  513.4MB
+Step 1/11 : FROM python:3.6-slim-stretch
+ ---> ffafb5882b66
+Step 2/11 : RUN apt update
+ ---> Using cache
+ ---> d218321bff13
+Step 3/11 : RUN apt install -y python3-dev gcc
+ ---> Using cache
+ ---> 5eb6b0490f14
+Step 4/11 : RUN pip install torch_nightly -f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html
+ ---> Using cache
+ ---> ae13f5ef47f3
+Step 5/11 : RUN pip install fastai
+ ---> Using cache
+ ---> 2b9dc5b8d63f
+Step 6/11 : RUN pip install starlette uvicorn python-multipart aiohttp
+ ---> Using cache
+ ---> 6a6a534fcf42
+Step 7/11 : ADD model-weights.pth model-weights.pth
+ ---> Using cache
+ ---> 79b15d8747f0
+Step 8/11 : ADD peruvian-food-detector.py peruvian-food-detector.py
+ ---> Using cache
+ ---> 30c5ed932064
+Step 9/11 : RUN python peruvian-food-detector.py
+ ---> Using cache
+ ---> d7e8003770b1
+Step 10/11 : EXPOSE 8008
+ ---> Using cache
+ ---> 41743a0a2a1a
+Step 11/11 : CMD ["python", "peruvian-food-detector.py", "serve"]
+ ---> Using cache
+ ---> e8abdf40de31
+Successfully built e8abdf40de31
+Successfully tagged registry.heroku.com/peruvian-food-detector/web:latest
+SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
+=== Pushing web (C:\Users\jm_07\proyectosGit\peruvian-food-identifier\Dockerfile)
+The push refers to repository [registry.heroku.com/peruvian-food-detector/web]
+5ea7c3ebd1cb: Pushed
+f0bfd701d902: Pushed
+c5e4250dc113: Pushed
+235de47022ad: Layer already exists
+30ccfbb91268: Layer already exists
+5ec7882285ad: Layer already exists
+6c0f6c1a72ce: Layer already exists
+525221a3992c: Layer already exists
+8fa9ddcda40e: Layer already exists
+a3012be88fb6: Layer already exists
+306c8b767b33: Layer already exists
+dd6cb05ac6a5: Layer already exists
+237472299760: Layer already exists
+latest: digest: sha256:8a651e81ee3b57e0729600741938e33fa3f2f03f106b521960dfecae6d2792c7 size: 3062
+Your image has been successfully pushed. You can now release it with the 'container:release' command.
+
+C:\Users\jm_07\proyectosGit\peruvian-food-identifier>heroku container:release web -a peruvian-food-detector
+Releasing images web to peruvian-food-detector... done
+
+C:\Users\jm_07\proyectosGit\peruvian-food-identifier>heroku open --app peruvian-food-detector
