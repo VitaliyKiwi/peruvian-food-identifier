@@ -57,8 +57,8 @@ learn.unfreeze()
 learn.lr_find()
 learn.recorder.plot()
 ```
-HERE THE IMAGE
-[Learning rate finder](images/lr_finder.JPG)
+
+![Learning rate finder](images/lr_finder.JPG)
 
 ```python
 learn.fit_one_cycle(8, max_lr=slice(1e-4))
@@ -71,3 +71,71 @@ Once the model is already trained, the next step is save the weights of the mode
 ```python
 learn.save('stage-2-r50-bs8-rs42-s512-no-opt', with_opt=False)
 ```
+
+# Step 6: Install Docker Quickstart terminal
+
+The Docker Desktop for Windows is only available for Professional or Enterprise 64-bit. In my case I have only the Windows Home version, so I installed the [Docker Quickstart terminal](https://docs.docker.com/toolbox/toolbox_install_windows/) which is enough for create and build and run the Docker file.
+
+# Step 7: Create Docker and python server files
+
+For this step and the following ones I took as reference the Docker file and web app implementation from [nikhilno1](https://github.com/nikhilno1/healthy-or-not/blob/master/heroku-deploy.md)
+
+The Docker file specifies the libraries to be installed and also the python server file to be executed:
+
+```
+# Install pytorch and fastai
+RUN pip install torch_nightly -f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html
+RUN pip install fastai
+
+# Install starlette and uvicorn
+RUN pip install starlette uvicorn python-multipart aiohttp
+
+ADD model-weights.pth model-weights.pth
+
+ADD peruvian-food-detector.py peruvian-food-detector.py
+
+# Run it once to trigger resnet download
+RUN python peruvian-food-detector.py
+```
+
+The python server file specifies the port to be exposed, the HTML web format, the model to be loaded and how the prediction is showed.
+
+# Step 8: Build and run Docker file
+
+The next step is build the Docker file as follows:
+```
+jm_07 (master) peruvian-food-identifier $ docker image build -t peruvian-food-detector .
+```
+Once the Docker file is builded correctly, the next step is run:
+```
+jm_07 (master) peruvian-food-identifier $ docker run -d --name peruvian-food-detector --publish 80:8008 peruvian-food-detector:latest
+```
+To view the page, just open a web browser and type the IP from the Docker container and use the port 80 (selected in the previous command), for example: http://192.168.99.100:80
+
+# Step 9: Deploy on Heroku
+
+To access to the web app from internet, one option is deploy on [Heroku](https://dashboard.heroku.com).
+In order to do it, we need to install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) locally, then using the command prompt from Windows execute the following commands:
+
+Login to Heroku (havin previously created an account)
+```
+C:\WINDOWS\system32>heroku container:login
+```
+Create the Heroku app
+```
+C:\WINDOWS\system32>heroku create peruvian-food-detector
+```
+Push your local app to Heroku
+```
+C:\Users\jm_07\proyectosGit\peruvian-food-identifier>heroku container:push web -a peruvian-food-detector
+```
+Release the app
+```
+C:\Users\jm_07\proyectosGit\peruvian-food-identifier>heroku container:release web -a peruvian-food-detector
+```
+Finally, open the web app!:
+```
+C:\Users\jm_07\proyectosGit\peruvian-food-identifier>heroku open --app peruvian-food-detector
+```
+
+Hope this helps to everyone who wants to learn about Deep Learning and deploy apps with the trained models :smile:
