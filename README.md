@@ -58,7 +58,7 @@ learn.lr_find()
 learn.recorder.plot()
 ```
 HERE THE IMAGE
-[Learning rate finder](images/lr_finder.JPG)
+![Learning rate finder](images/lr_finder.JPG)
 
 ```python
 learn.fit_one_cycle(8, max_lr=slice(1e-4))
