@@ -76,7 +76,7 @@ learn.save('stage-2-r50-bs8-rs42-s512-no-opt', with_opt=False)
 
 The Docker Desktop for Windows is only available for Professional or Enterprise 64-bit. In my case I have only the Windows Home version, so I installed the [Docker Quickstart terminal](https://docs.docker.com/toolbox/toolbox_install_windows/) which is enough for create and build and run the Docker file.
 
-# Step 6: Create Docker and python server files
+# Step 7: Create Docker and python server files
 
 For this step and the following ones I took as reference the Docker file and web app implementation from [nikhilno1](https://github.com/nikhilno1/healthy-or-not/blob/master/heroku-deploy.md)
 
@@ -100,7 +100,7 @@ RUN python peruvian-food-detector.py
 
 The python server file specifies the port to be exposed, the HTML web format, the model to be loaded and how the prediction is showed.
 
-# Step 7: Build and run Docker file
+# Step 8: Build and run Docker file
 
 The next step is build the Docker file as follows:
 ```
@@ -112,7 +112,7 @@ jm_07 (master) peruvian-food-identifier $ docker run -d --name peruvian-food-det
 ```
 To view the page, just open a web browser and type the IP from the Docker container and use the port 80 (selected in the previous command), for example: http://192.168.99.100:80
 
-# Step 8: Deploy on Heroku
+# Step 9: Deploy on Heroku
 
 To access to the web app from internet, one option is deploy on [Heroku](https://dashboard.heroku.com).
 In order to do it, we need to install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) locally, then using the command prompt from Windows execute the following commands:
